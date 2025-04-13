@@ -1,0 +1,25 @@
+{
+  "name": "@casd/print-tree",
+  "version": "0.0.1",
+  "description": "Create plain text tree, like the unix `tree` command",
+  "author": "Cas Dijkman <info@cdijkman.nl> (https://cdijkman.nl)",
+  "keywords": [
+    "print",
+    "tree",
+    "unix tree"
+  ],
+  "homepage": "https://cdijkman.nl/",
+  "license": "GPL-3.0-only",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/casdijkman/print-tree.git"
+  },
+  "main": "print-tree.js",
+  "packageManager": "yarn@4.6.0",
+  "devDependencies": {
+    "typescript": "^5.8.3"
+  },
+  "scripts": {
+    "build": "tsc"
+  }
+}
