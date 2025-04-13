@@ -1,7 +1,3 @@
-# SPDX-FileCopyrightText: 2024 Cas Dijkman
-#
-# SPDX-License-Identifier: GPL-3.0-only
-
 # -*- mode: gitignore; -*-
 
 ### Node ###
@@ -11,6 +7,10 @@ node_modules/
 # Logs
 yarn-debug.log*
 yarn-error.log*
+
+# Yarn cache
+.yarn/install-state.gz
+.pnp.*
 
 ### Emacs ###
 *~
