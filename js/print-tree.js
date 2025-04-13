@@ -2,9 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.stringToTrees = stringToTrees;
 exports.printTrees = printTrees;
-function range(size, startAt = 0) {
-    return [...Array(size).keys()].map((i) => i + startAt);
-}
+const util_1 = require("./util");
 function stringToTrees(string, { indent = 2 } = {}) {
     const lines = string.split('\n');
     const nodeData = lines
@@ -61,7 +59,7 @@ function printTreeRecurse({ tree, currentLevel = 0, descendantsLevels = [], acc 
     }
     (_a = tree.children) === null || _a === void 0 ? void 0 : _a.forEach((child, index) => {
         const isLastChild = index === tree.children.length - 1;
-        const prefix = range(currentLevel)
+        const prefix = (0, util_1.range)(currentLevel)
             .map((level) => descendantsLevels.includes(level) ? '|   ' : '    ').join('');
         acc.push(`${prefix}${isLastChild ? '└' : '├'}── ${child.value}`);
         printTreeRecurse({

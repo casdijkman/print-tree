@@ -1,4 +1,5 @@
 import type { Node } from './index.d.ts';
+import { range } from './util';
 
 type LineNode = {
     line: string,
@@ -6,10 +7,6 @@ type LineNode = {
     level: number,
     isRoot: boolean,
     lineIndex: number
-}
-
-function range(size: number, startAt = 0) {
-    return [...Array(size).keys()].map((i) => i + startAt);
 }
 
 export function stringToTrees(string: string, { indent = 2 } = {}) {
