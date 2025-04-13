@@ -63,6 +63,12 @@ export function stringToTrees(string: string, { indent = 2 } = {}) {
     return parseTree({ rangeMin: 0, rangeMax: nodeData.length });
 }
 
+export function printTreesFromString(string: string) {
+    return printTrees(
+        stringToTrees(string)
+    );
+}
+
 export function printTrees(trees: Node[]) {
     return trees
         .map((tree) => printTree(tree))

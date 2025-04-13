@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.stringToTrees = stringToTrees;
+exports.printTreesFromString = printTreesFromString;
 exports.printTrees = printTrees;
 const util_1 = require("./util");
 function stringToTrees(string, { indent = 2 } = {}) {
@@ -41,6 +42,9 @@ function stringToTrees(string, { indent = 2 } = {}) {
         });
     };
     return parseTree({ rangeMin: 0, rangeMax: nodeData.length });
+}
+function printTreesFromString(string) {
+    return printTrees(stringToTrees(string));
 }
 function printTrees(trees) {
     return trees
