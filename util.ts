@@ -1,3 +1,3 @@
 export function range(size: number, startAt = 0) {
-    return [...Array(size).keys()].map((i) => i + startAt);
+  return Array.from({ length: size }).map((_, i) => i + startAt);
 }

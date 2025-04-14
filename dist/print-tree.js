@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.stringToTrees = stringToTrees;
 exports.printTreesFromString = printTreesFromString;
 exports.printTrees = printTrees;
-const util_1 = require("./util");
+const util_js_1 = require("./util.js");
 function stringToTrees(string, { indent = 2 } = {}) {
     const lines = string.split('\n');
     const nodeData = lines
@@ -15,7 +15,7 @@ function stringToTrees(string, { indent = 2 } = {}) {
             line,
             value: line.replace(/^ +/, ''),
             level,
-            isRoot: level === 0
+            isRoot: level === 0,
         };
     })
         .filter((node) => node.value !== '')
@@ -26,21 +26,20 @@ function stringToTrees(string, { indent = 2 } = {}) {
             .find((n) => n.level === node.level);
         return nextOfLevelNode === null || nextOfLevelNode === void 0 ? void 0 : nextOfLevelNode.lineIndex;
     };
-    const parseTree = ({ currentLevel = 0, rangeMin, rangeMax }) => {
-        return nodeData
-            .slice(rangeMin, rangeMax)
-            .filter((node) => node.level === currentLevel)
-            .map((node) => {
-            var _a;
-            const children = parseTree({
-                currentLevel: currentLevel + 1,
-                rangeMin: node.lineIndex,
-                rangeMax: (_a = nextOfLevelIndex(node)) !== null && _a !== void 0 ? _a : nodeData.length
-            });
-            const hasChildren = Array.isArray(children) && children.length > 0;
-            return Object.assign({ value: node.value }, (hasChildren && { children }));
+    const parseTree = ({ currentLevel = 0, rangeMin, rangeMax, }) => nodeData
+        .slice(rangeMin, rangeMax)
+        .filter((node) => node.level === currentLevel)
+        .map((node) => {
+        var _a;
+        const children = parseTree({
+            currentLevel: currentLevel + 1,
+            rangeMin: node.lineIndex,
+            rangeMax: (_a = nextOfLevelIndex(node)) !== null && _a !== void 0 ? _a : nodeData.length,
         });
-    };
+        const hasChildren = Array.isArray(children) && children.length > 0;
+        const nodeWithChildren = Object.assign({ value: node.value }, (hasChildren && { children }));
+        return nodeWithChildren;
+    });
     return parseTree({ rangeMin: 0, rangeMax: nodeData.length });
 }
 function printTreesFromString(string) {
@@ -53,27 +52,29 @@ function printTrees(trees) {
 }
 function printTree(tree) {
     const lines = [];
-    printTreeRecurse({ tree, acc: lines });
+    printTreeRecurse({ tree, accumulator: lines });
     return lines.join('\n');
 }
-function printTreeRecurse({ tree, currentLevel = 0, descendantsLevels = [], acc = [] }) {
-    var _a;
+function printTreeRecurse({ tree, currentLevel = 0, descendantsLevels = [], accumulator = [], }) {
     if (currentLevel === 0) {
-        acc.push(tree.value);
+        accumulator.push(`${tree.value}`);
     }
-    (_a = tree.children) === null || _a === void 0 ? void 0 : _a.forEach((child, index) => {
+    if (!Array.isArray(tree.children)) {
+        return;
+    }
+    for (const [index, child] of tree.children.entries()) {
         const isLastChild = index === tree.children.length - 1;
-        const prefix = (0, util_1.range)(currentLevel)
+        const prefix = (0, util_js_1.range)(currentLevel)
             .map((level) => descendantsLevels.includes(level) ? '|   ' : '    ').join('');
-        acc.push(`${prefix}${isLastChild ? '└' : '├'}── ${child.value}`);
+        accumulator.push(`${prefix}${isLastChild ? '└' : '├'}── ${child.value}`);
         printTreeRecurse({
             tree: child,
             currentLevel: currentLevel + 1,
             descendantsLevels: [
                 ...descendantsLevels,
-                ...(isLastChild ? [] : [currentLevel])
+                ...(isLastChild ? [] : [currentLevel]),
             ],
-            acc
+            accumulator,
         });
-    });
+    }
 }

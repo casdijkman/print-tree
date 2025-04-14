@@ -6,6 +6,6 @@ export function printTreesFromString(string: string): string;
 export function printTrees(trees: Node[]): string;
 
 export type Node = {
-  value: any,
-  children: Node[]
-}
+  value: any;
+  children?: Node[];
+};
