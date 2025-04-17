@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.stringToTrees = stringToTrees;
 exports.printTreesFromString = printTreesFromString;
 exports.printTrees = printTrees;
+exports.printTree = printTree;
 const util_js_1 = require("./util.js");
 function stringToTrees(string, { indent = 2 } = {}) {
     const lines = string.split('\n');

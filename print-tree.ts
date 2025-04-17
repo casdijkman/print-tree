@@ -74,7 +74,7 @@ export function printTrees(trees: Node[]) {
     .join('\n\n');
 }
 
-function printTree(tree: Node): string {
+export function printTree(tree: Node): string {
   const lines: string[] = [];
   printTreeRecurse({ tree, accumulator: lines });
   return lines.join('\n');
