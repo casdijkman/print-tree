@@ -21,7 +21,7 @@
     "type": "git",
     "url": "git+https://github.com/casdijkman/print-tree.git"
   },
-  "main": "dist/print-tree.js",
+  "main": "dist/lib/print-tree.js",
   "types": "index.d.ts",
   "packageManager": "yarn@4.6.0",
   "devDependencies": {

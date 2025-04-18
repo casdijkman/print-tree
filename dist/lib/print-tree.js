@@ -5,19 +5,21 @@ exports.printTreesFromString = printTreesFromString;
 exports.printTrees = printTrees;
 exports.printTree = printTree;
 const util_js_1 = require("./util.js");
-function stringToTrees(string, { indent = 2 } = {}) {
+function stringToTrees(string, { indentCharacter = ' ', indentPerLevel = 2, } = {}) {
+    const indentationRegex = new RegExp(`^${(0, util_js_1.regexEscape)(indentCharacter)}+`);
     const lines = string.split('\n');
     const nodeData = lines
         .map((line) => {
         var _a, _b, _c;
-        const nofLeadingSpaces = (_c = (_b = (_a = /^ +/.exec(line)) === null || _a === void 0 ? void 0 : _a[0]) === null || _b === void 0 ? void 0 : _b.length) !== null && _c !== void 0 ? _c : 0;
-        const level = Math.floor(nofLeadingSpaces / indent);
-        return {
+        const nofLeadingIndentChars = (_c = (_b = (_a = indentationRegex.exec(line)) === null || _a === void 0 ? void 0 : _a[0]) === null || _b === void 0 ? void 0 : _b.length) !== null && _c !== void 0 ? _c : 0;
+        const level = Math.floor(nofLeadingIndentChars / indentPerLevel);
+        const data = {
             line,
-            value: line.replace(/^ +/, ''),
+            value: line.replace(indentationRegex, '').trim(),
             level,
             isRoot: level === 0,
         };
+        return data;
     })
         .filter((node) => node.value !== '')
         .map((node, index) => Object.assign(node, { lineIndex: index }));
@@ -43,13 +45,11 @@ function stringToTrees(string, { indent = 2 } = {}) {
     });
     return parseTree({ rangeMin: 0, rangeMax: nodeData.length });
 }
-function printTreesFromString(string) {
-    return printTrees(stringToTrees(string));
+function printTreesFromString(string, options) {
+    return printTrees(stringToTrees(string, options));
 }
 function printTrees(trees) {
-    return trees
-        .map((tree) => printTree(tree))
-        .join('\n\n');
+    return trees.map((tree) => printTree(tree)).join('\n\n');
 }
 function printTree(tree) {
     const lines = [];

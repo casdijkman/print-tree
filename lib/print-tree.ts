@@ -1,5 +1,5 @@
-import type { Node } from './index.d.js';
-import { range } from './util.js';
+import type { Node } from '../index.d.js';
+import { range, regexEscape } from './util.js';
 
 type LineNode = {
   line: string;
@@ -9,18 +9,28 @@ type LineNode = {
   lineIndex: number;
 };
 
-export function stringToTrees(string: string, { indent = 2 } = {}) {
+export function stringToTrees(
+  string: string,
+  {
+    indentCharacter = ' ',
+    indentPerLevel = 2,
+  } = {},
+) {
+  const indentationRegex = new RegExp(
+    `^${regexEscape(indentCharacter)}+`,
+  );
   const lines = string.split('\n');
   const nodeData = lines
     .map((line) => {
-      const nofLeadingSpaces = /^ +/.exec(line)?.[0]?.length ?? 0;
-      const level = Math.floor(nofLeadingSpaces / indent);
-      return {
+      const nofLeadingIndentChars = indentationRegex.exec(line)?.[0]?.length ?? 0;
+      const level = Math.floor(nofLeadingIndentChars / indentPerLevel);
+      const data = {
         line,
-        value: line.replace(/^ +/, ''),
+        value: line.replace(indentationRegex, '').trim(),
         level,
         isRoot: level === 0,
       };
+      return data;
     })
     .filter((node) => node.value !== '')
     .map((node, index) => Object.assign(node, { lineIndex: index }));
@@ -32,46 +42,48 @@ export function stringToTrees(string: string, { indent = 2 } = {}) {
     return nextOfLevelNode?.lineIndex;
   };
 
-    type ParseTreeParameters = {
-      currentLevel?: number;
-      rangeMin: number;
-      rangeMax: number;
-    };
+  type ParseTreeParameters = {
+    currentLevel?: number;
+    rangeMin: number;
+    rangeMax: number;
+  };
 
-    const parseTree = ({
-      currentLevel = 0,
-      rangeMin,
-      rangeMax,
-    }: ParseTreeParameters): Node[] => nodeData
-      .slice(rangeMin, rangeMax)
-      .filter((node) => node.level === currentLevel)
-      .map((node) => {
-        const children = parseTree({
-          currentLevel: currentLevel + 1,
-          rangeMin: node.lineIndex,
-          rangeMax: nextOfLevelIndex(node) ?? nodeData.length,
-        });
-        const hasChildren = Array.isArray(children) && children.length > 0;
-        const nodeWithChildren: Node = {
-          value: node.value,
-          ...(hasChildren && { children }),
-        };
-        return nodeWithChildren;
+  const parseTree = ({
+    currentLevel = 0,
+    rangeMin,
+    rangeMax,
+  }: ParseTreeParameters): Node[] => nodeData
+    .slice(rangeMin, rangeMax)
+    .filter((node) => node.level === currentLevel)
+    .map((node) => {
+      const children = parseTree({
+        currentLevel: currentLevel + 1,
+        rangeMin: node.lineIndex,
+        rangeMax: nextOfLevelIndex(node) ?? nodeData.length,
       });
+      const hasChildren = Array.isArray(children) && children.length > 0;
+      const nodeWithChildren: Node = {
+        value: node.value,
+        ...(hasChildren && { children }),
+      };
+      return nodeWithChildren;
+    });
 
-    return parseTree({ rangeMin: 0, rangeMax: nodeData.length });
+  return parseTree({ rangeMin: 0, rangeMax: nodeData.length });
 }
 
-export function printTreesFromString(string: string) {
-  return printTrees(
-    stringToTrees(string),
-  );
+export function printTreesFromString(
+  string: string,
+  options?: {
+    indentCharacter?: string;
+    indentPerLevel?: number;
+  },
+) {
+  return printTrees(stringToTrees(string, options));
 }
 
 export function printTrees(trees: Node[]) {
-  return trees
-    .map((tree) => printTree(tree))
-    .join('\n\n');
+  return trees.map((tree) => printTree(tree)).join('\n\n');
 }
 
 export function printTree(tree: Node): string {
