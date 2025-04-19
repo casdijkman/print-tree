@@ -14,7 +14,7 @@ Using `yarn`:
 ## How to use
 
 <dl>
-  <dt><strong><code>printTreesFromString()</code></strong></dt>
+  <dt><code>printTreesFromString()</code></dt>
   <dd>Generate tree string from input string</dd>
 </dl>
 
@@ -41,7 +41,7 @@ Root
 ```
 
 <dl>
-  <dt><strong><code>printTrees()</code></strong></dt>
+  <dt><code>printTrees()</code></dt>
   <dd>Generate tree string from input nodes</dd>
 </dl>
 
@@ -53,5 +53,19 @@ const inputNodes = [
 ];
 
 const treeString = printTrees(inputNodes);
+// treeString is the same value as the example above
+```
+
+<dl>
+  <dt><code>printTree()</code></dt>
+  <dd>Generate tree string from input nodes</dd>
+</dl>
+
+```javascript
+import { printTree } from '@casd/print-tree';
+
+const inputNodes = {value:"Root",children:[{value:"Child",children:[{value:"Grandchild"}]}]};
+
+const treeString = printTree(inputNodes);
 // treeString is the same value as the example above
 ```
