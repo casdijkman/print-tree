@@ -23,10 +23,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@casd/expect@npm:^0.0.2":
+  version: 0.0.2
+  resolution: "@casd/expect@npm:0.0.2"
+  checksum: 10c0/0382cfcaae0518f82f98f58ee1cf96f94aec0c22f424f9a2ceca3daee623674ea6e2821c92b60c7ebf1f9033070b3225e60c9d4adb931fa85dbd40c95d83ff62
+  languageName: node
+  linkType: hard
+
 "@casd/print-tree@workspace:.":
   version: 0.0.0-use.local
   resolution: "@casd/print-tree@workspace:."
   dependencies:
+    "@casd/expect": "npm:^0.0.2"
     "@types/xo": "npm:^0.39.9"
     typescript: "npm:^5.8.3"
     xo: "npm:^0.60.0"

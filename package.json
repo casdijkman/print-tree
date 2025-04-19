@@ -25,13 +25,14 @@
   "types": "index.d.ts",
   "packageManager": "yarn@4.6.0",
   "devDependencies": {
+    "@casd/expect": "^0.0.2",
     "@types/xo": "^0.39.9",
     "typescript": "^5.8.3",
     "xo": "^0.60.0"
   },
   "scripts": {
     "build": "tsc",
-    "test": "yarn lint",
+    "test": "yarn lint && yarn build && node dist/test/index.js",
     "lint": "xo --space"
   },
   "bugs": {
