@@ -33,13 +33,13 @@ const hashTreeFromString = printTreesFromString(
 const allTrees = [treeFromString, treesFromNodes, treeFromNodes, hashTreeFromString];
 
 describe('output trees should be the same')
-  .expect(areAllEqual(allTrees)).to.equal(true);
+  .expect(areAllEqual(allTrees)).to.be.true();
 
 describe('trees should be a string')
   .expect(allTrees[0]).to.be.a('string');
 
 describe('trees should not be empty')
-  .expect(allTrees[0].length > 0).to.equal(true);
+  .expect(allTrees[0].length > 0).to.be.true();
 
 describe('trees should end in newline')
-  .expect(allTrees[0].endsWith('\n')).to.equal(true);
+  .expect(allTrees[0].endsWith('\n')).to.be.true();
