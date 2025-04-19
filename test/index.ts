@@ -17,15 +17,16 @@ const treeInputNodes = [{ value: 'Root', children: [{ value: 'Child', children: 
 const treesFromNodes = printTrees(treeInputNodes);
 const treeFromNodes = printTree(treeInputNodes[0]);
 
-const hashTreeStringInput = `Root
-# Child
-## Grandchild`;
+const hashTreeStringInput = `# Root
+## Child
+### Grandchild`;
 
 const hashTreeFromString = printTreesFromString(
   hashTreeStringInput,
   {
     indentCharacter: '#',
     indentPerLevel: 1,
+    indentRootLevel: 1,
   },
 );
 

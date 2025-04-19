@@ -11,12 +11,13 @@ const treeFromString = (0, print_tree_js_1.printTreesFromString)(treeInputString
 const treeInputNodes = [{ value: 'Root', children: [{ value: 'Child', children: [{ value: 'Grandchild' }] }] }];
 const treesFromNodes = (0, print_tree_js_1.printTrees)(treeInputNodes);
 const treeFromNodes = (0, print_tree_js_1.printTree)(treeInputNodes[0]);
-const hashTreeStringInput = `Root
-# Child
-## Grandchild`;
+const hashTreeStringInput = `# Root
+## Child
+### Grandchild`;
 const hashTreeFromString = (0, print_tree_js_1.printTreesFromString)(hashTreeStringInput, {
     indentCharacter: '#',
     indentPerLevel: 1,
+    indentRootLevel: 1,
 });
 const allTrees = [treeFromString, treesFromNodes, treeFromNodes, hashTreeFromString];
 (0, expect_1.describe)('output trees should be the same')
