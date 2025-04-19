@@ -49,12 +49,12 @@ function printTreesFromString(string, options) {
     return printTrees(stringToTrees(string, options));
 }
 function printTrees(trees) {
-    return trees.map((tree) => printTree(tree)).join('\n\n');
+    return trees.map((tree) => printTree(tree)).join('\n');
 }
 function printTree(tree) {
     const lines = [];
     printTreeRecurse({ tree, accumulator: lines });
-    return lines.join('\n');
+    return lines.join('\n').concat('\n');
 }
 function printTreeRecurse({ tree, currentLevel = 0, descendantsLevels = [], accumulator = [], }) {
     if (currentLevel === 0) {

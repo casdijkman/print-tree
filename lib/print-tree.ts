@@ -83,13 +83,13 @@ export function printTreesFromString(
 }
 
 export function printTrees(trees: Node[]) {
-  return trees.map((tree) => printTree(tree)).join('\n\n');
+  return trees.map((tree) => printTree(tree)).join('\n');
 }
 
 export function printTree(tree: Node): string {
   const lines: string[] = [];
   printTreeRecurse({ tree, accumulator: lines });
-  return lines.join('\n');
+  return lines.join('\n').concat('\n');
 }
 
 type PrintTreeRecurseParameters = {
