@@ -1,5 +1,9 @@
-import type { Node } from '../index.d.js';
 import { range, regexEscape } from './util.js';
+
+export type Node = {
+  value: any;
+  children?: Node[];
+};
 
 type LineNode = {
   line: string;
@@ -14,6 +18,7 @@ export function stringToTrees(
   {
     indentCharacter = ' ',
     indentPerLevel = 2,
+    indentRootLevel = 0,
   } = {},
 ) {
   const indentationRegex = new RegExp(
@@ -23,7 +28,7 @@ export function stringToTrees(
   const nodeData = lines
     .map((line) => {
       const nofLeadingIndentChars = indentationRegex.exec(line)?.[0]?.length ?? 0;
-      const level = Math.floor(nofLeadingIndentChars / indentPerLevel);
+      const level = Math.floor(nofLeadingIndentChars / indentPerLevel) - indentRootLevel;
       const data = {
         line,
         value: line.replace(indentationRegex, '').trim(),
@@ -62,11 +67,10 @@ export function stringToTrees(
         rangeMax: nextOfLevelIndex(node) ?? nodeData.length,
       });
       const hasChildren = Array.isArray(children) && children.length > 0;
-      const nodeWithChildren: Node = {
+      return {
         value: node.value,
         ...(hasChildren && { children }),
       };
-      return nodeWithChildren;
     });
 
   return parseTree({ rangeMin: 0, rangeMax: nodeData.length });
@@ -77,6 +81,7 @@ export function printTreesFromString(
   options?: {
     indentCharacter?: string;
     indentPerLevel?: number;
+    indentRootLevel?: number;
   },
 ) {
   return printTrees(stringToTrees(string, options));
@@ -111,7 +116,7 @@ function printTreeRecurse(
     accumulator.push(`${tree.value}`);
   }
 
-  if (!Array.isArray(tree.children)) {
+  if (!Array.isArray(tree.children) || tree.children.length === 0) {
     return;
   }
 

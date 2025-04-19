@@ -5,14 +5,14 @@ exports.printTreesFromString = printTreesFromString;
 exports.printTrees = printTrees;
 exports.printTree = printTree;
 const util_js_1 = require("./util.js");
-function stringToTrees(string, { indentCharacter = ' ', indentPerLevel = 2, } = {}) {
+function stringToTrees(string, { indentCharacter = ' ', indentPerLevel = 2, indentRootLevel = 0, } = {}) {
     const indentationRegex = new RegExp(`^${(0, util_js_1.regexEscape)(indentCharacter)}+`);
     const lines = string.split('\n');
     const nodeData = lines
         .map((line) => {
         var _a, _b, _c;
         const nofLeadingIndentChars = (_c = (_b = (_a = indentationRegex.exec(line)) === null || _a === void 0 ? void 0 : _a[0]) === null || _b === void 0 ? void 0 : _b.length) !== null && _c !== void 0 ? _c : 0;
-        const level = Math.floor(nofLeadingIndentChars / indentPerLevel);
+        const level = Math.floor(nofLeadingIndentChars / indentPerLevel) - indentRootLevel;
         const data = {
             line,
             value: line.replace(indentationRegex, '').trim(),
@@ -40,8 +40,7 @@ function stringToTrees(string, { indentCharacter = ' ', indentPerLevel = 2, } = 
             rangeMax: (_a = nextOfLevelIndex(node)) !== null && _a !== void 0 ? _a : nodeData.length,
         });
         const hasChildren = Array.isArray(children) && children.length > 0;
-        const nodeWithChildren = Object.assign({ value: node.value }, (hasChildren && { children }));
-        return nodeWithChildren;
+        return Object.assign({ value: node.value }, (hasChildren && { children }));
     });
     return parseTree({ rangeMin: 0, rangeMax: nodeData.length });
 }
@@ -60,7 +59,7 @@ function printTreeRecurse({ tree, currentLevel = 0, descendantsLevels = [], accu
     if (currentLevel === 0) {
         accumulator.push(`${tree.value}`);
     }
-    if (!Array.isArray(tree.children)) {
+    if (!Array.isArray(tree.children) || tree.children.length === 0) {
         return;
     }
     for (const [index, child] of tree.children.entries()) {
