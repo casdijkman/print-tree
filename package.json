@@ -1,6 +1,6 @@
 {
   "name": "@casd/print-tree",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Create a plain text tree, like the `tree` command common on UNIX-like systems",
   "author": "Cas Dijkman <info@cdijkman.nl> (https://cdijkman.nl)",
   "keywords": [
