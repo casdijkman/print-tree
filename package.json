@@ -32,7 +32,8 @@
   },
   "scripts": {
     "build": "tsc",
-    "test": "yarn lint && yarn build && node dist/test/index.js",
+    "test": "yarn lint && yarn test:only",
+    "test:only": "yarn build && node dist/test/index.js",
     "lint": "xo --space"
   },
   "bugs": {
@@ -52,5 +53,8 @@
         "always"
       ]
     }
+  },
+  "dependencies": {
+    "@casd/string-builder": "^0.0.1"
   }
 }

@@ -45,17 +45,21 @@ function stringToTrees(string, { indentCharacter = ' ', indentPerLevel = 2, inde
     return parseTree({ rangeMin: 0, rangeMax: nodeData.length });
 }
 function printTreesFromString(string, options) {
-    return printTrees(stringToTrees(string, options));
+    return printTrees(stringToTrees(string, options), options);
 }
-function printTrees(trees) {
-    return trees.map((tree) => printTree(tree)).join('\n');
+function printTrees(trees, options) {
+    return trees.map((tree) => printTree(tree, options)).join('\n');
 }
-function printTree(tree) {
+function printTree(tree, options) {
     const lines = [];
-    printTreeRecurse({ tree, accumulator: lines });
+    printTreeRecurse({
+        tree,
+        accumulator: lines,
+        characterSet: options === null || options === void 0 ? void 0 : options.characterSet,
+    });
     return lines.join('\n').concat('\n');
 }
-function printTreeRecurse({ tree, currentLevel = 0, descendantsLevels = [], accumulator = [], }) {
+function printTreeRecurse({ tree, currentLevel = 0, descendantsLevels = [], accumulator = [], characterSet, }) {
     if (currentLevel === 0) {
         accumulator.push(`${tree.value}`);
     }
@@ -64,9 +68,13 @@ function printTreeRecurse({ tree, currentLevel = 0, descendantsLevels = [], accu
     }
     for (const [index, child] of tree.children.entries()) {
         const isLastChild = index === tree.children.length - 1;
-        const prefix = (0, util_js_1.range)(currentLevel)
-            .map((level) => descendantsLevels.includes(level) ? '|   ' : '    ').join('');
-        accumulator.push(`${prefix}${isLastChild ? '└' : '├'}── ${child.value}`);
+        const prefix = (0, util_js_1.drawTreePrefix)({
+            isLastChild,
+            characterSet,
+            descendantsLevels: (0, util_js_1.range)(currentLevel)
+                .map((level) => descendantsLevels.includes(level)),
+        });
+        accumulator.push(`${prefix} ${child.value}`);
         printTreeRecurse({
             tree: child,
             currentLevel: currentLevel + 1,
@@ -75,6 +83,7 @@ function printTreeRecurse({ tree, currentLevel = 0, descendantsLevels = [], accu
                 ...(isLastChild ? [] : [currentLevel]),
             ],
             accumulator,
+            characterSet,
         });
     }
 }

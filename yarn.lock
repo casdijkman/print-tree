@@ -35,11 +35,19 @@ __metadata:
   resolution: "@casd/print-tree@workspace:."
   dependencies:
     "@casd/expect": "npm:^0.0.5"
+    "@casd/string-builder": "npm:^0.0.1"
     "@types/xo": "npm:^0.39.9"
     typescript: "npm:^5.8.3"
     xo: "npm:^0.60.0"
   languageName: unknown
   linkType: soft
+
+"@casd/string-builder@npm:^0.0.1":
+  version: 0.0.1
+  resolution: "@casd/string-builder@npm:0.0.1"
+  checksum: 10c0/1a56649756378055ee4ed205827ae0344cf98b6e8ec9bac86a6fd7b5fc466753d4ea10206e0e2198afcd89283f0ed4f6b1756aef6c9aa9b4ccc6e813e37916a2
+  languageName: node
+  linkType: hard
 
 "@eslint-community/eslint-utils@npm:^4.1.2, @eslint-community/eslint-utils@npm:^4.2.0, @eslint-community/eslint-utils@npm:^4.4.0, @eslint-community/eslint-utils@npm:^4.5.0":
   version: 4.6.0

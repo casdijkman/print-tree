@@ -1,4 +1,9 @@
-import { range, regexEscape } from './util.js';
+import {
+  range,
+  regexEscape,
+  drawTreePrefix,
+  type TreeCharacterset,
+} from './util.js';
 
 export type Node = {
   value: any;
@@ -21,9 +26,7 @@ export function stringToTrees(
     indentRootLevel = 0,
   } = {},
 ) {
-  const indentationRegex = new RegExp(
-    `^${regexEscape(indentCharacter)}+`,
-  );
+  const indentationRegex = new RegExp(`^${regexEscape(indentCharacter)}+`);
   const lines = string.split('\n');
   const nodeData = lines
     .map((line) => {
@@ -82,27 +85,38 @@ export function printTreesFromString(
     indentCharacter?: string;
     indentPerLevel?: number;
     indentRootLevel?: number;
+    characterSet?: TreeCharacterset;
   },
 ) {
-  return printTrees(stringToTrees(string, options));
+  return printTrees(
+    stringToTrees(string, options),
+    options,
+  );
 }
 
-export function printTrees(trees: Node[]) {
-  return trees.map((tree) => printTree(tree)).join('\n');
+export function printTrees(
+  trees: Node[],
+  options?: {
+    characterSet?: TreeCharacterset;
+  },
+) {
+  return trees.map((tree) => printTree(tree, options)).join('\n');
 }
 
-export function printTree(tree: Node): string {
+export function printTree(
+  tree: Node,
+  options?: {
+    characterSet?: TreeCharacterset;
+  },
+): string {
   const lines: string[] = [];
-  printTreeRecurse({ tree, accumulator: lines });
+  printTreeRecurse({
+    tree,
+    accumulator: lines,
+    characterSet: options?.characterSet,
+  });
   return lines.join('\n').concat('\n');
 }
-
-type PrintTreeRecurseParameters = {
-  tree: Node;
-  currentLevel?: number;
-  descendantsLevels?: number[];
-  accumulator: string[];
-};
 
 function printTreeRecurse(
   {
@@ -110,7 +124,14 @@ function printTreeRecurse(
     currentLevel = 0,
     descendantsLevels = [],
     accumulator = [],
-  }: PrintTreeRecurseParameters,
+    characterSet,
+  }: {
+    tree: Node;
+    currentLevel?: number;
+    descendantsLevels?: number[];
+    accumulator: string[];
+    characterSet?: TreeCharacterset;
+  },
 ) {
   if (currentLevel === 0) {
     accumulator.push(`${tree.value}`);
@@ -122,12 +143,14 @@ function printTreeRecurse(
 
   for (const [index, child] of tree.children.entries()) {
     const isLastChild = index === tree.children.length - 1;
-    const prefix = range(currentLevel)
-      .map((level) =>
-        descendantsLevels.includes(level) ? '|   ' : '    ',
-      ).join('');
+    const prefix = drawTreePrefix({
+      isLastChild,
+      characterSet,
+      descendantsLevels: range(currentLevel)
+        .map((level) => descendantsLevels.includes(level)),
+    });
 
-    accumulator.push(`${prefix}${isLastChild ? '└' : '├'}── ${child.value}`);
+    accumulator.push(`${prefix} ${child.value}`);
     printTreeRecurse({
       tree: child,
       currentLevel: currentLevel + 1,
@@ -136,6 +159,7 @@ function printTreeRecurse(
         ...(isLastChild ? [] : [currentLevel]),
       ],
       accumulator,
+      characterSet,
     });
   }
 }
