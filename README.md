@@ -42,14 +42,14 @@ Root
 
 <dl>
   <dt><code>printTrees()</code></dt>
-  <dd>Generate tree string from input nodes</dd>
+  <dd>Generate tree string from input nodes, supports multiple trees</dd>
 </dl>
 
 ```javascript
 import { printTrees } from '@casd/print-tree';
 
 const inputNodes = [
-  {value:"Root",children:[{value:"Child",children:[{value:"Grandchild"}]}]}
+  { value: 'Root', children: [{ value: 'Child', children: [{ value: 'Grandchild' }] }] }
 ];
 
 const treeString = printTrees(inputNodes);
@@ -58,14 +58,14 @@ const treeString = printTrees(inputNodes);
 
 <dl>
   <dt><code>printTree()</code></dt>
-  <dd>Generate tree string from input nodes</dd>
+  <dd>Generate tree string from input node</dd>
 </dl>
 
 ```javascript
 import { printTree } from '@casd/print-tree';
 
-const inputNodes = {value:"Root",children:[{value:"Child",children:[{value:"Grandchild"}]}]};
+const inputNode = { value: 'Root', children: [{ value: 'Child', children: [{ value: 'Grandchild' }] }] };
 
-const treeString = printTree(inputNodes);
+const treeString = printTree(inputNode);
 // treeString is the same value as the example above
 ```
