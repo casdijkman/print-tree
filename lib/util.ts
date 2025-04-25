@@ -33,7 +33,7 @@ export const treeCharacters: TreeCharacters = {
   },
 };
 
-export function drawTreePrefix({
+export function getTreePrefix({
   descendantsLevels,
   isLastChild,
   characterSet = treeCharacters.boxDrawing,
@@ -42,12 +42,10 @@ export function drawTreePrefix({
   isLastChild: boolean;
   characterSet?: TreeCharacterset;
 }) {
-  const descendantPrefixes = descendantsLevels.map(
-    (hasDescendant: boolean) => sb(
-      hasDescendant ? characterSet.vertical : ' ',
-    ).addTimes(' ', 3).toString(),
-  );
-  return sb(...descendantPrefixes)
+  return sb(
+    ...descendantsLevels.map((hasDescendant: boolean) =>
+      sb(hasDescendant ? characterSet.vertical : ' ').addTimes(' ', 3).toString(),
+    ))
     .add(characterSet[isLastChild ? 'upAndRight' : 'verticalAndRight'])
     .addTimes(characterSet.horizontal, 2)
     .toString();

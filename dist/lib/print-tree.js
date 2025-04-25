@@ -68,7 +68,7 @@ function printTreeRecurse({ tree, currentLevel = 0, descendantsLevels = [], accu
     }
     for (const [index, child] of tree.children.entries()) {
         const isLastChild = index === tree.children.length - 1;
-        const prefix = (0, util_js_1.drawTreePrefix)({
+        const prefix = (0, util_js_1.getTreePrefix)({
             isLastChild,
             characterSet,
             descendantsLevels: (0, util_js_1.range)(currentLevel)

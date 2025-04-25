@@ -8,7 +8,7 @@ export type TreeCharacterset = {
 };
 type TreeCharacters = Record<string, TreeCharacterset>;
 export declare const treeCharacters: TreeCharacters;
-export declare function drawTreePrefix({ descendantsLevels, isLastChild, characterSet, }: {
+export declare function getTreePrefix({ descendantsLevels, isLastChild, characterSet, }: {
     descendantsLevels: boolean[];
     isLastChild: boolean;
     characterSet?: TreeCharacterset;

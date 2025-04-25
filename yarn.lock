@@ -35,17 +35,17 @@ __metadata:
   resolution: "@casd/print-tree@workspace:."
   dependencies:
     "@casd/expect": "npm:^0.0.5"
-    "@casd/string-builder": "npm:^0.0.1"
+    "@casd/string-builder": "npm:^0.0.3"
     "@types/xo": "npm:^0.39.9"
     typescript: "npm:^5.8.3"
     xo: "npm:^0.60.0"
   languageName: unknown
   linkType: soft
 
-"@casd/string-builder@npm:^0.0.1":
-  version: 0.0.1
-  resolution: "@casd/string-builder@npm:0.0.1"
-  checksum: 10c0/1a56649756378055ee4ed205827ae0344cf98b6e8ec9bac86a6fd7b5fc466753d4ea10206e0e2198afcd89283f0ed4f6b1756aef6c9aa9b4ccc6e813e37916a2
+"@casd/string-builder@npm:^0.0.3":
+  version: 0.0.3
+  resolution: "@casd/string-builder@npm:0.0.3"
+  checksum: 10c0/d03bfbfdbd92d4a9d8be0af727d3fb218ca756939a10f627a9f80715dbe8853945bcb086ff382bc7fe4697002c23aa3bc328c2d171b7d29f856a25ad6b78922d
   languageName: node
   linkType: hard
 

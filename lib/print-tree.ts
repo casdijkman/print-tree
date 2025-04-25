@@ -1,7 +1,7 @@
 import {
   range,
   regexEscape,
-  drawTreePrefix,
+  getTreePrefix,
   type TreeCharacterset,
 } from './util.js';
 
@@ -143,7 +143,7 @@ function printTreeRecurse(
 
   for (const [index, child] of tree.children.entries()) {
     const isLastChild = index === tree.children.length - 1;
-    const prefix = drawTreePrefix({
+    const prefix = getTreePrefix({
       isLastChild,
       characterSet,
       descendantsLevels: range(currentLevel)
