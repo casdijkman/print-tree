@@ -12,6 +12,11 @@ Root
   Child
     Grandchild`;
 
+const treeString = `Root
+└── Child
+    └── Grandchild
+`;
+
 const treeFromString = printTreesFromString(treeInputString);
 const treeInputNodes = [{ value: 'Root', children: [{ value: 'Child', children: [{ value: 'Grandchild' }] }] }];
 const treesFromNodes = printTrees(treeInputNodes);
@@ -34,6 +39,9 @@ const allTrees = [treeFromString, treesFromNodes, treeFromNodes, hashTreeFromStr
 
 describe('output trees should be the same')
   .expect(areAllEqual(allTrees)).to.be.true();
+
+describe('output trees should be correct')
+  .expect(allTrees[0]).to.equal(treeString);
 
 describe('trees should be a string')
   .expect(allTrees[0]).to.be.a('string');
