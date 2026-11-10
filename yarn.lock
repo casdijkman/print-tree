@@ -35,17 +35,19 @@ __metadata:
   resolution: "@casd/print-tree@workspace:."
   dependencies:
     "@casd/expect": "npm:^0.0.5"
-    "@casd/string-builder": "npm:^0.0.3"
+    "@casd/string-builder": "npm:^0.0.5"
     "@types/xo": "npm:^0.39.9"
     typescript: "npm:^5.8.3"
     xo: "npm:^0.60.0"
   languageName: unknown
   linkType: soft
 
-"@casd/string-builder@npm:^0.0.3":
-  version: 0.0.3
-  resolution: "@casd/string-builder@npm:0.0.3"
-  checksum: 10c0/d03bfbfdbd92d4a9d8be0af727d3fb218ca756939a10f627a9f80715dbe8853945bcb086ff382bc7fe4697002c23aa3bc328c2d171b7d29f856a25ad6b78922d
+"@casd/string-builder@npm:^0.0.5":
+  version: 0.0.5
+  resolution: "@casd/string-builder@npm:0.0.5"
+  dependencies:
+    string-format: "npm:^2.0.0"
+  checksum: 10c0/89fdd5aedcd8fd5a49404b1b4930f7112ed703700049b670c5d1aec6e22846f7a4dcef4a2efa25631c1e126d6634a3de661d2e24d10cb794a89654a13a372fee
   languageName: node
   linkType: hard
 
@@ -3587,6 +3589,13 @@ __metadata:
   version: 3.0.21
   resolution: "spdx-license-ids@npm:3.0.21"
   checksum: 10c0/ecb24c698d8496aa9efe23e0b1f751f8a7a89faedcdfcbfabae772b546c2db46ccde8f3bc447a238eb86bbcd4f73fea88720ef3b8394f7896381bec3d7736411
+  languageName: node
+  linkType: hard
+
+"string-format@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "string-format@npm:2.0.0"
+  checksum: 10c0/7bca13ba9f942f635c74d637da5e9e375435cbd428f35eeef28c3a30f81d4e63b95ff2c6cca907d897dd3951bbf52e03e3b945a0e9681358e33bd67222436538
   languageName: node
   linkType: hard
 

@@ -55,6 +55,6 @@
     }
   },
   "dependencies": {
-    "@casd/string-builder": "^0.0.3"
+    "@casd/string-builder": "^0.0.5"
   }
 }
